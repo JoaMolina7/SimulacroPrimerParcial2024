@@ -72,8 +72,8 @@ class Venta{
         $cadenaMotos = $this->leerColObj($this->getColObjMotos());
         return "Numero:". $this->getNumero() .
         "\nFecha:". $this->getFecha() .
-        "\nCliente:". $this->getObjCliente() .
-        "\nMotos:". $cadenaMotos .
+        "\nCliente:\n". $this->getObjCliente() .
+        "\nMotos:\n". $cadenaMotos .
         "\nPrecio final:". $this->getPrecioFinal();
     }
 
@@ -114,3 +114,4 @@ class Venta{
 
 
 }
+?>

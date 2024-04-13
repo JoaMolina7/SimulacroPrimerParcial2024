@@ -9,7 +9,7 @@ documento. Si un cliente está dado de baja, no puede registrar compras desde el
 class Cliente{
     private $nombre;
     private $apellido;
-    private $dadoDeBaja;
+    private $dadoDeBaja;//true = dado de baja / false = no dado de baja
     private $tipo;
     private $DNI;
 
@@ -62,10 +62,20 @@ class Cliente{
    }
 
    public function __toString(){
+        $stringDadoDeBaja = $this->leerDadoDeBaja($this->getDadoDeBaja());
        return "Nombre:". $this->getNombre() .
        "\nApellido:". $this->getApellido() .
-       "\nDado de baja:". $this->getDadoDeBaja() .
+       "\nDado de baja:". $stringDadoDeBaja .
        "\nTipo:". $this->getTipo() .
-       "\nDNI:". $this->getDNI();
+       "\nDNI:". $this->getDNI() ."\n";
    }
+
+   protected function leerDadoDeBaja($dadoDeBaja){
+       if($dadoDeBaja == true){
+           return "Dado de baja";
+       }else{
+           return "No dado de baja";
+       }
 }
+}
+?>

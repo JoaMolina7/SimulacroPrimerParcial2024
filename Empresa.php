@@ -92,9 +92,9 @@ class Empresa{
         $cadenaClientes = $this->leerColObj($this->getColObjClientes());//Muestra todos los clientes
         return "Denominación:". $this->getDenominacion() .
         "\nDirección:". $this->getDireccion() .
-        "\nClientes:". $cadenaClientes .
-        "\nMotos:". $cadenaMotos .
-        "\nVentas:". $cadenaVentas;
+        "\nClientes:\n". $cadenaClientes .
+        "\nMotos:\n". $cadenaMotos .
+        "\nVentas:\n". $cadenaVentas;
     }
 
     /**5. Implementar el método retornarMoto($codigoMoto) que recorre la colección de motos de la Empresa y
@@ -122,17 +122,49 @@ Considerar que el objeto Venta tiene estos atributos    private $numero;
     private $fecha;
     private $objCliente;
     private $colObjMotos;
-    private $precioFinal; */
+    private $precioFinal;
+    __construct($numero, $fecha, $objCliente, $colObjMotos, $precioFinal)
+    Utilizar también método retornarMoto($codigoMoto)
+     */
     public function registrarVenta($colCodigosMoto, $objCliente){
         $i = 0;
-     
+        $objMoto = null;
+        $importeFinal = 0;
+        $fecha = intval(date("Y"));
+        $objNuevaVenta = new Venta(count($this->getColObjVentas()) + 1, $fecha, $objCliente, [], $importeFinal);
+    
+        while($i < count($colCodigosMoto)){
+            $objMoto = $this->retornarMoto($colCodigosMoto[$i]);
+                if($objMoto != null){
+                    $objNuevaVenta->incorporarMoto($objMoto);
+                    $importeFinal = $importeFinal + $objNuevaVenta->getPrecioFinal();
+                    $objNuevaVenta->setPrecioFinal($importeFinal);
+                }
+            $i++;
             }
+                if($objNuevaVenta->getPrecioFinal()>0){
+                $nuevaColObjVenta = $this->getColObjVentas();
+                array_push($nuevaColObjVenta, $objNuevaVenta);
+                $this->setColObjVentas($nuevaColObjVenta);
+                }
 
-          
-            
+            return $objNuevaVenta->getPrecioFinal();
+        }
 
+        /**Implementar el método retornarVentasXCliente($tipo,$numDoc) que recibe por parámetro el tipo y
+número de documento de un Cliente y retorna una colección con las ventas realizadas al cliente */
 
-
+        public function retornarVentasXCliente($tipo, $numDoc){
+            $i = 0;
+            $colVentas = [];
+            while($i < count($this->getColObjVentas())){
+                if($this->getColObjVentas()[$i]->getObjCliente()->getTipo() == $tipo && $this->getColObjVentas()[$i]->getObjCliente()->getDNI() == $numDoc){
+                    array_push($colVentas, $this->getColObjVentas()[$i]);
+                }
+                $i++;
+            }
+            return $colVentas;
+        }
  }
         
         

@@ -81,12 +81,21 @@ public function setActiva($newActiva){
 }
 
 public function __toString(){
+    $stringActiva = $this->LeerActiva($this->getActiva());
     return "Código: ". $this->getCodigo() ."\n".
     "Costo: $". $this->getCosto() ."\n".
     "Anio de fabricación: ". $this->getAnioFabricacion() ."\n".
     "Descripción: ". $this->getDescripcion() ."\n".
     "Porcentaje de incremento anual: ". $this->getPorcentajeIncrementoAnual() ."%\n".
-    "Activa: ". $this->getActiva() ."\n";
+    "Activa: ". $stringActiva ."\n";
+}
+
+protected function LeerActiva($activaONo){
+    if($activaONo == true){
+        return "Activa";
+    }else{
+        return "No está activa";
+    }
 }
 /**
  *Implementar el método darPrecioVenta el cual calcula el valor por el cual puede ser vendida una moto.
