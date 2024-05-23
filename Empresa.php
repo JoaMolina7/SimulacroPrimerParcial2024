@@ -182,13 +182,14 @@ número de documento de un Cliente y retorna una colección con las ventas reali
         
         public function informarVentasImportadas(){
             $colVentasImportadas = [];
-                foreach($this->getColObjVentas() as $objVenta){
-                        if(count($objVenta->retornarMotosImportadas()) > 0){
-                            array_push($colVentasImportadas, $objVenta->retornarMotosImportadas());
-                        }
+            foreach($this->getColObjVentas() as $objVenta){
+                if (!empty($objVenta->retornarMotosImportadas())) {
+                    array_push($colVentasImportadas, $objVenta->retornarMotosImportadas());
                 }
+            }
             return $colVentasImportadas;
         }
+    
         
         
         
