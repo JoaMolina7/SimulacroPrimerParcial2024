@@ -137,12 +137,12 @@ Considerar que el objeto Venta tiene estos atributos    private $numero;
             $objMoto = $this->retornarMoto($colCodigosMoto[$i]);
                 if($objMoto != null){
                     $objNuevaVenta->incorporarMoto($objMoto);
-                    $importeFinal = $importeFinal + $objNuevaVenta->getPrecioFinal();
+                    $importeFinal = $objNuevaVenta->getPrecioFinal();
                     $objNuevaVenta->setPrecioFinal($importeFinal);
                 }
             $i++;
             }
-                if($objNuevaVenta->getPrecioFinal()>0){
+                if(count($objNuevaVenta->getColObjMotos()) > 0){
                 $nuevaColObjVenta = $this->getColObjVentas();
                 array_push($nuevaColObjVenta, $objNuevaVenta);
                 $this->setColObjVentas($nuevaColObjVenta);
@@ -155,26 +155,47 @@ Considerar que el objeto Venta tiene estos atributos    private $numero;
 número de documento de un Cliente y retorna una colección con las ventas realizadas al cliente */
 
         public function retornarVentasXCliente($tipo, $numDoc){
-            $i = 0;
             $colVentas = [];
-            while($i < count($this->getColObjVentas())){
-                if($this->getColObjVentas()[$i]->getObjCliente()->getTipo() == $tipo && $this->getColObjVentas()[$i]->getObjCliente()->getDNI() == $numDoc){
-                    array_push($colVentas, $this->getColObjVentas()[$i]);
+            foreach($this->getColObjVentas() as $objVenta){
+                if($objVenta->getObjCliente()->getTipo() == $tipo && $objVenta->getObjCliente()->getDNI() == $numDoc){
+                    array_push($colVentas, $objVenta);
                 }
-                $i++;
             }
             return $colVentas;
         }
- }
+        
+        /**1. Implementar el método informarSumaVentasNacionales() que recorre la colección de ventas realizadas por la
+    empresa y retorna el importe total de ventas Nacionales realizadas por la empresa.
+    (*IMPORTANTE: invocar a los métodos implementados en la clase venta cuando crea necesario) */
+        public function informarSumaVentasNacionales(){
+            $importeTotal = 0;
+            foreach($this->getColObjVentas() as $objVenta){
+                $importeTotal += $objVenta->retornarTotalVentaNacional();
+            }
+            return $importeTotal;
+        }
+
+
+    /**2. Implementar el método informarVentasImportadas() que recorre la colección de ventas realizadas por la empresa y
+    retorna una colección de ventas de motos importadas. Si en la venta al menos una de las motos es importada la
+    venta debe ser informada. (*IMPORTANTE: invocar a los métodos implementados en la clase venta cuando crea necesario) */
+        
+        public function informarVentasImportadas(){
+            $colVentasImportadas = [];
+                foreach($this->getColObjVentas() as $objVenta){
+                        if(count($objVenta->retornarMotosImportadas()) > 0){
+                            array_push($colVentasImportadas, $objVenta->retornarMotosImportadas());
+                        }
+                }
+            return $colVentasImportadas;
+        }
         
         
-
-
-
-
-
-
-
-
-
+        
+        
+        
+        
+        
+        
+}
 ?>

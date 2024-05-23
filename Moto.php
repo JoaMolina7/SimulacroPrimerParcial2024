@@ -108,11 +108,12 @@ por_inc_anual: porcentaje de incremento anual de la moto.
  */
 public function darPrecioVenta(){
     $_venta = 0;
-    if($this->activa == false){
+    if($this->getActiva() == false){
       $_venta = -1;
     }else{
         $_compra = $this->getCosto();
-        $anio = 2024 - $this->getAnioFabricacion();
+        $anioActual = intval(date("Y"));
+        $anio = $anioActual - $this->getAnioFabricacion();
         $por_inc_anual = $this->getPorcentajeIncrementoAnual();
         $por_inc_anual = $por_inc_anual / 100;
         $_venta = $_compra + $_compra * ($anio * $por_inc_anual);
