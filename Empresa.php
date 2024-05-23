@@ -183,7 +183,7 @@ número de documento de un Cliente y retorna una colección con las ventas reali
         public function informarVentasImportadas(){
             $colVentasImportadas = [];
             foreach($this->getColObjVentas() as $objVenta){
-                if (!empty($objVenta->retornarMotosImportadas())) {
+                if (!empty($objVenta->retornarMotosImportadas())) { //El empty devuelve true si el array es vacío, por eso es !empty
                     array_push($colVentasImportadas, $objVenta->retornarMotosImportadas());
                 }
             }
